@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "TOP 10 WORLD"
+description = "A premium international editorial website for curated Top 10 rankings, comparisons, guides, reviews, software, travel, sports, and culture."
+version = "1.0.0"
+id = "artifacts/top10-world"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25204
+
+[services.development]
+run = "pnpm --filter @workspace/top10-world run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/top10-world", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/top10-world/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25204"
+BASE_PATH = "/"
